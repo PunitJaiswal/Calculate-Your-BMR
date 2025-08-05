@@ -1,0 +1,11 @@
+{
+    "akashjaiswal@gmail.com": {
+        "name": "Akash Jaiswal",
+        "password": "scrypt:32768:8:1$5zmCKUesrLLLdm5h$da276f6681e325923c78e2396d93ac52487ecb280c14bca987b7ad0b1354e4b7025e10f07b045a39320bd68f2e958cf7e3ce828825f45e39bb093437c12a9506",
+        "age": "20",
+        "weight": 20.0,
+        "height": 129.0,
+        "gender": "Male",
+        "goal": "hsjakfdh"
+    }
+}

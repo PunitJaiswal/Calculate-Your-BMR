@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<body class="bg-light">
+  <div class="container mt-5">
+    <!-- PAGE TITLE -->
+    <h2 class="mb-4 text-center">Check Your BMR</h2>
+
+    <!-- TOAST NOTIFICATION -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+          {% for message in messages %}
+            <div class="toast align-items-center text-bg-success border-0 show" role="alert">
+              <div class="d-flex">
+                <div class="toast-body">
+                  {{ message }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboardSection">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Welcome, {{ user }}!</h3>
+        </div>
+        <div class="card-body">
+          <h5 class="mb-3">Your Personal Details:</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">Age: {{ details.age }}</li>
+            <li class="list-group-item">Weight: {{ details.weight }} kg</li>
+            <li class="list-group-item">Height: {{ details.height }} cm</li>
+            <li class="list-group-item">Gender: {{ details.gender }}</li>
+            <li class="list-group-item">Goal: {{ details.goal }}</li>
+          </ul>
+          <h5>Your BMR: <span class="badge bg-success">{{ bmr }} kcal/day</span></h5>
+        </div>
+        <div class="card-footer text-end">
+          <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mt-4 text-end">
+        <button class="btn btn-outline-primary me-2" onclick="toggleUpdateProfile()">Update Profile</button>
+        <form method="POST" action="/delete_profile" style="display:inline;" onsubmit="return confirm('Are you sure? This cannot be undone.')">
+          <button type="submit" class="btn btn-outline-danger">Delete My Account</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- UPDATE PROFILE SECTION -->
+    <div class="card mt-3" id="updateFormSection" style="display: none;">
+      <div class="card-body">
+        <h5 class="card-title">Update Profile</h5>
+        <form method="POST" action="/update_profile">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" value="{{ details.name }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input type="number" class="form-control" name="age" value="{{ details.age }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Weight (kg)</label>
+            <input type="number" class="form-control" name="weight" value="{{ details.weight }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Height (cm)</label>
+            <input type="number" class="form-control" name="height" value="{{ details.height }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select class="form-select" name="gender" required>
+              <option value="Male" {% if details.gender == 'Male' %}selected{% endif %}>Male</option>
+              <option value="Female" {% if details.gender == 'Female' %}selected{% endif %}>Female</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Goal</label>
+            <input type="text" class="form-control" name="goal" value="{{ details.goal }}" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <button type="button" class="btn btn-secondary ms-2" onclick="toggleUpdateProfile()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MEAL SUMMARY SECTION -->
+    <div class="mt-4">
+      <h4>Meal Summary</h4>
+      {% if meals %}
+        <ul>
+          {% for meal in meals %}
+            <li>
+              <strong>{{ meal['meal'] }}:</strong>
+              {{ meal['items'] | join(', ') }}
+              <br>
+              <em>Logged at: {{ meal['loggedAt'].strftime('%b %d, %Y %I:%M %p') }}</em>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No meals logged yet.</p>
+      {% endif %}
+    </div>
+
+  <a class="btn btn-primary mt-2" href="{{ url_for('log_meal') }}">Log New Meal</a>
+
+    <!-- LOG NEW MEAL FORM -->
+    <div id="mealForm" style="display: none;" class="mt-4">
+      <h4>Log a Meal</h4>
+      <form method="POST" action="{{ url_for('log_meal') }}">
+        <div class="mb-3">
+          <label class="form-label">Meal Type</label>
+          <select class="form-select" name="meal" required>
+            <option value="">-- Select Meal --</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snacks">Snacks</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Select Food Items</label>
+          <div class="row">
+            {% for item, info in food_db.items() %}
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="items" value="{{ item }}" id="{{ item }}">
+                  <label class="form-check-label" for="{{ item }}">
+                    {{ item }} — {{ info.calories }} kcal
+                  </label>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Meal</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS TOGGLE HANDLERS -->
+  <script>
+    function toggleUpdateProfile() {
+      const dashboard = document.getElementById("dashboardSection");
+      const form = document.getElementById("updateFormSection");
+      const isFormVisible = form.style.display === "block";
+      form.style.display = isFormVisible ? "none" : "block";
+      dashboard.style.display = isFormVisible ? "block" : "none";
+    }
+
+    function toggleMealForm() {
+      const mealForm = document.getElementById("mealForm");
+      mealForm.style.display = (mealForm.style.display === "block") ? "none" : "block";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+      toastElList.forEach(function (toastEl) {
+        new bootstrap.Toast(toastEl).show();
+      });
+    });
+  </script>
+</body>
+
+{% endblock %}

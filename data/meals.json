@@ -1,0 +1,84 @@
+[
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Jeera Rice"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Jeera Rice"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Dinner",
+        "items": [
+            "Jeera Rice",
+            "Dal"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Lunch",
+        "items": [
+            "Dal"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Dinner",
+        "items": [
+            "Jeera Rice"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Dal"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Jeera Rice",
+            "Cucumber"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Jeera Rice"
+        ],
+        "loggedAt": "2025-08-05"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Jeera Rice"
+        ],
+        "loggedAt": "2025-08-05 01:49:51"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Lunch"
+        ],
+        "loggedAt": "2025-08-05 09:48:37"
+    }
+]

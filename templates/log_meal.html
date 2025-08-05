@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Log a New Meal</h2>
+  <form method="POST" action="{{ url_for('log_meal') }}">
+    <div class="form-group">
+      <label for="meal">Meal Name</label>
+      <input type="text" class="form-control" id="meal" name="meal" required placeholder="e.g. Breakfast, Lunch">
+    </div>
+    <div class="form-group">
+      <label for="items">Food Items (comma-separated)</label>
+      <input type="text" class="form-control" id="items" name="items" required placeholder="e.g. Jeera Rice, Dal, Cucumber">
+    </div>
+    <button type="submit" class="btn btn-primary">Log Meal</button>
+  </form>
+</div>
+{% endblock %}
