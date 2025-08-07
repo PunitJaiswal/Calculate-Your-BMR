@@ -4,41 +4,21 @@
 
 <body class="bg-light">
   <div class="container mt-5">
-    <!-- PAGE TITLE -->
-    <h2 class="mb-4 text-center">Check Your BMR</h2>
-
-    <!-- TOAST NOTIFICATION -->
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
-          {% for message in messages %}
-            <div class="toast align-items-center text-bg-success border-0 show" role="alert">
-              <div class="d-flex">
-                <div class="toast-body">
-                  {{ message }}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
 
     <!-- DASHBOARD SECTION -->
     <div id="dashboardSection">
       <div class="card shadow">
         <div class="card-header bg-primary text-white">
-          <h3 class="mb-0">Welcome, {{ user }}!</h3>
+          <h3 class="mb-0">Welcome, {{ user.name }}!</h3>
         </div>
         <div class="card-body">
           <h5 class="mb-3">Your Personal Details:</h5>
           <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item">Age: {{ details.age }}</li>
-            <li class="list-group-item">Weight: {{ details.weight }} kg</li>
-            <li class="list-group-item">Height: {{ details.height }} cm</li>
-            <li class="list-group-item">Gender: {{ details.gender }}</li>
-            <li class="list-group-item">Goal: {{ details.goal }}</li>
+            <li class="list-group-item">Age: {{ user.age }}</li>
+            <li class="list-group-item">Weight: {{ user.weight }} kg</li>
+            <li class="list-group-item">Height: {{ user.height }} cm</li>
+            <li class="list-group-item">Gender: {{ user.gender }}</li>
+            <li class="list-group-item">Goal: {{ user.goal }}</li>
           </ul>
           <h5>Your BMR: <span class="badge bg-success">{{ bmr }} kcal/day</span></h5>
         </div>
@@ -63,30 +43,30 @@
         <form method="POST" action="/update_profile">
           <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" value="{{ details.name }}" required>
+            <input type="text" class="form-control" name="name" value="{{ user.name }}" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Age</label>
-            <input type="number" class="form-control" name="age" value="{{ details.age }}" required>
+            <input type="number" class="form-control" name="age" value="{{ user.age }}" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Weight (kg)</label>
-            <input type="number" class="form-control" name="weight" value="{{ details.weight }}" required>
+            <input type="number" class="form-control" name="weight" value="{{ user.weight }}" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Height (cm)</label>
-            <input type="number" class="form-control" name="height" value="{{ details.height }}" required>
+            <input type="number" class="form-control" name="height" value="{{ user.height }}" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Gender</label>
             <select class="form-select" name="gender" required>
-              <option value="Male" {% if details.gender == 'Male' %}selected{% endif %}>Male</option>
-              <option value="Female" {% if details.gender == 'Female' %}selected{% endif %}>Female</option>
+              <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+              <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
             </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Goal</label>
-            <input type="text" class="form-control" name="goal" value="{{ details.goal }}" required>
+            <input type="text" class="form-control" name="goal" value="{{ user.goal }}" required>
           </div>
           <div class="text-end">
             <button type="submit" class="btn btn-success">Save Changes</button>
@@ -117,40 +97,6 @@
 
   <a class="btn btn-primary mt-2" href="{{ url_for('log_meal') }}">Log New Meal</a>
 
-    <!-- LOG NEW MEAL FORM -->
-    <div id="mealForm" style="display: none;" class="mt-4">
-      <h4>Log a Meal</h4>
-      <form method="POST" action="{{ url_for('log_meal') }}">
-        <div class="mb-3">
-          <label class="form-label">Meal Type</label>
-          <select class="form-select" name="meal" required>
-            <option value="">-- Select Meal --</option>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Snacks">Snacks</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Select Food Items</label>
-          <div class="row">
-            {% for item, info in food_db.items() %}
-              <div class="col-md-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="items" value="{{ item }}" id="{{ item }}">
-                  <label class="form-check-label" for="{{ item }}">
-                    {{ item }} — {{ info.calories }} kcal
-                  </label>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-success">Submit Meal</button>
-      </form>
-    </div>
   </div>
 
   <!-- JS TOGGLE HANDLERS -->
@@ -168,12 +114,6 @@
       mealForm.style.display = (mealForm.style.display === "block") ? "none" : "block";
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const toastElList = [].slice.call(document.querySelectorAll('.toast'));
-      toastElList.forEach(function (toastEl) {
-        new bootstrap.Toast(toastEl).show();
-      });
-    });
   </script>
 </body>
 

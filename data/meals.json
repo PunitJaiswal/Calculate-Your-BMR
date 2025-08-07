@@ -80,5 +80,37 @@
             "Lunch"
         ],
         "loggedAt": "2025-08-05 09:48:37"
+    },
+    {
+        "user": "akashjaiswal@gmail.com",
+        "meal": "Dinner",
+        "items": [
+            "Paneer Rice"
+        ],
+        "loggedAt": "2025-08-07 22:24:58"
+    },
+    {
+        "user": "akashjaiswal@gmail.com",
+        "meal": "Breakfast",
+        "items": [
+            "Tea and Biscuits"
+        ],
+        "loggedAt": "2025-08-07 22:25:10"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Lunch",
+        "items": [
+            "Daal, Chawal and Sabji"
+        ],
+        "loggedAt": "2025-08-07 22:47:53"
+    },
+    {
+        "user": "punitjaiswal@gmail.com",
+        "meal": "Snack",
+        "items": [
+            "Tea"
+        ],
+        "loggedAt": "2025-08-07 22:54:59"
     }
 ]

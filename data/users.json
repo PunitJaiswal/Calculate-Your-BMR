@@ -3,9 +3,18 @@
         "name": "Akash Jaiswal",
         "password": "scrypt:32768:8:1$5zmCKUesrLLLdm5h$da276f6681e325923c78e2396d93ac52487ecb280c14bca987b7ad0b1354e4b7025e10f07b045a39320bd68f2e958cf7e3ce828825f45e39bb093437c12a9506",
         "age": "20",
-        "weight": 20.0,
-        "height": 129.0,
+        "weight": 60.0,
+        "height": 165.0,
         "gender": "Male",
-        "goal": "hsjakfdh"
+        "goal": "Gain Weight"
+    },
+    "punitjaiswal@gmail.com": {
+        "name": "Punit Jaiswal",
+        "password": "scrypt:32768:8:1$UQy898nVRo76tIjD$59544cbbed5aa9c4b86a9955c64bcbb81a0361dd385a87f6a1f67b35707124f4a55f3931780ae9bde68fcace7644af6858132176fab37b770892b3f8660e9876",
+        "age": "20",
+        "weight": 60.0,
+        "height": 182.0,
+        "gender": "Male",
+        "goal": "Gain Weight"
     }
 }

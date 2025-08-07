@@ -112,7 +112,6 @@ def dashboard():
         return redirect(url_for('logout'))
 
     meals = load_meals()
-    food_db = load_food_db()
 
     user_meals = []
     for m in meals:
@@ -137,11 +136,9 @@ def dashboard():
 
     return render_template(
         'dashboard.html',
-        user=user_data['name'],
-        details=user_data,
+        user=user_data,
         bmr=round(bmr),
-        meals=user_meals,
-        food_db=food_db
+        meals=user_meals
     )
 
 @app.route('/logout')
@@ -183,7 +180,6 @@ def delete_profile():
 @login_required
 def log_meal():
     meals = load_meals()
-    food_db = load_food_db()
 
     if request.method == 'POST':
         meal_type = request.form['meal']
@@ -200,25 +196,7 @@ def log_meal():
         flash("Meal logged successfully!", "success")
         return redirect(url_for('dashboard'))
 
-    return render_template('log_meal.html', food_db=food_db)
-
-@app.route('/meal_summary')
-@login_required
-def meal_summary():
-    meals = load_meals()
-    food_db = load_food_db()
-    user_email = session['email']
-    today = datetime.now().strftime("%Y-%m-%d")
-    user_meals = [m for m in meals if m['user'] == user_email and m['loggedAt'] == today]
-
-    summary = {"calories": 0, "protein": 0, "carbs": 0, "fiber": 0}
-    for meal in user_meals:
-        for item in meal['items']:
-            data = food_db.get(item, {})
-            for key in summary:
-                summary[key] += data.get(key, 0)
-
-    return render_template('meal_summary.html', meals=user_meals, summary=summary, food_db=food_db)
+    return render_template('log_meal.html')
 
 
 if __name__ == '__main__':
